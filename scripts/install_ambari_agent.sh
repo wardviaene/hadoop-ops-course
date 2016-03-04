@@ -22,3 +22,8 @@ mv -f /etc/ambari-agent/conf/ambari-agent.ini.new /etc/ambari-agent/conf/ambari-
 
 # start ambari-agent
 ambari-agent start
+
+# install ntp
+yum -y install ntp
+systemctl enable ntpd
+service ntpd start
