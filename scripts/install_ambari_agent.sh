@@ -27,3 +27,6 @@ ambari-agent start
 yum -y install ntp
 systemctl enable ntpd
 service ntpd start
+
+# install deltarpm
+yum install -y deltarpm
