@@ -17,4 +17,4 @@ ambari-server setup -s --java-home=/usr/lib/jvm/jre/
 # start ambari-server
 ambari-server start
 
-sh install_ambari_agent.sh
+sh /vagrant/scripts/install_ambari_agent.sh
