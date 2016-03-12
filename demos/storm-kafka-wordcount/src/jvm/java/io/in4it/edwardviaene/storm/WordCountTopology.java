@@ -14,16 +14,21 @@ import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 import backtype.storm.spout.SchemeAsMultiScheme;
+import backtype.storm.task.OutputCollector;
 import storm.kafka.BrokerHosts;
 import storm.kafka.ZkHosts;
 import storm.kafka.SpoutConfig;
 import storm.kafka.StringScheme;
 import storm.kafka.KafkaSpout;
+import storm.kafka.bolt.KafkaBolt;
+import storm.kafka.bolt.mapper.FieldNameBasedTupleToKafkaMapper;
+import storm.kafka.bolt.selector.DefaultTopicSelector;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.UUID;
+import java.util.Properties;
 
 
 public class WordCountTopology {
@@ -65,18 +70,28 @@ public class WordCountTopology {
 
   public static void main(String[] args) throws Exception {
 
+    Config conf = new Config();
     TopologyBuilder builder = new TopologyBuilder();
     BrokerHosts hosts = new ZkHosts("node1.example.com:2181");
     SpoutConfig spoutConfig = new SpoutConfig(hosts, "mytopic", "", UUID.randomUUID().toString());
     spoutConfig.scheme = new SchemeAsMultiScheme(new StringScheme());
     KafkaSpout kafkaSpout = new KafkaSpout(spoutConfig);
 
-    builder.setSpout("sentences", kafkaSpout, 5);
+    builder.setSpout("sentences", kafkaSpout, 4);
 
-    builder.setBolt("split", new SplitSentence(), 8).shuffleGrouping("sentences");
-    builder.setBolt("count", new WordCount(), 12).fieldsGrouping("split", new Fields("word"));
+    builder.setBolt("split", new SplitSentence(), 2).shuffleGrouping("sentences");
+    builder.setBolt("count", new WordCount(), 2).fieldsGrouping("split", new Fields("word"));
 
-    Config conf = new Config();
+    // kafka output bolt
+    Properties props = new Properties();
+    props.put("metadata.broker.list", "node1.example.com:6667");
+    props.put("serializer.class", "kafka.serializer.StringEncoder");
+    conf.put(KafkaBolt.KAFKA_BROKER_PROPERTIES, props);
+    KafkaBolt bolt = new KafkaBolt()
+          .withTopicSelector(new DefaultTopicSelector("mytopic2"))
+          .withTupleToKafkaMapper(new FieldNameBasedTupleToKafkaMapper());
+    builder.setBolt("forwardToKafka", bolt , 4).shuffleGrouping("count");
+
     conf.setDebug(true);
 
     if (args != null && args.length > 0) {
