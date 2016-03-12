@@ -59,12 +59,12 @@ public class WordCountTopology {
         count = 0;
       count++;
       counts.put(word, count);
-      collector.emit(new Values(word, count));
+      collector.emit(new Values(word, Integer.toString(count)));
     }
 
     @Override
     public void declareOutputFields(OutputFieldsDeclarer declarer) {
-      declarer.declare(new Fields("word", "count"));
+      declarer.declare(new Fields("key", "message"));
     }
   }
 
@@ -90,7 +90,7 @@ public class WordCountTopology {
     KafkaBolt bolt = new KafkaBolt()
           .withTopicSelector(new DefaultTopicSelector("mytopic2"))
           .withTupleToKafkaMapper(new FieldNameBasedTupleToKafkaMapper());
-    builder.setBolt("forwardToKafka", bolt , 4).shuffleGrouping("count");
+    builder.setBolt("forwardToKafka", bolt , 2).fieldsGrouping("count", new Fields("key", "message"));
 
     conf.setDebug(true);
 
