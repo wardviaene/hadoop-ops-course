@@ -25,6 +25,9 @@ mv -f /etc/ambari-agent/conf/ambari-agent.ini.new /etc/ambari-agent/conf/ambari-
 # start ambari-agent
 ambari-agent start
 
+# jps fix
+ln -s /usr/bin/jps /usr/lib/jvm/jre//bin/jps
+
 # install ntp
 yum -y install ntp
 systemctl enable ntpd
