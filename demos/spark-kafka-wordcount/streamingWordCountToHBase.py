@@ -35,7 +35,6 @@ def functionToCreateContext():
   opts = {"metadata.broker.list": "node1.example.com:6667,node2.example.com:6667"}
   kvs = KafkaUtils.createDirectStream(ssc, ["mytopic"], opts)
   # processing
-  #.map(lambda (k,v): k, [k, columnFamily, columnQualifier, v]) \
   lines = kvs.map(lambda x: x[1])
   counts = lines.flatMap(lambda line: line.split(" ")) \
    .map(lambda word: (word, 1)) \
