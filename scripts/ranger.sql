@@ -1,0 +1,2 @@
+GRANT ALL PRIVILEGES ON *.* TO 'rangerinstall'@'%' IDENTIFIED BY 'rangerinstall' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
