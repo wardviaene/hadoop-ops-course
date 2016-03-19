@@ -28,6 +28,9 @@ ambari-agent start
 # jps fix
 ln -s /usr/bin/jps /usr/lib/jvm/jre//bin/jps
 
+# fix jar
+ln -s /usr/bin/jar /usr/lib/jvm/jre/bin/jar
+
 # install ntp
 yum -y install ntp
 systemctl enable ntpd
