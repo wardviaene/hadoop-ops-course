@@ -33,5 +33,12 @@ kdb5_util create -P admin -s
 echo '*/admin@EXAMPLE.COM  *' > /var/kerberos/krb5kdc/kadm5.acl
 kadmin.local -q "addprinc -pw admin admin/admin"
 
+# add user keyadmin for Ranger KMS
+kadmin.local -q 'addprinc -pw keyadmin keyadmin'
+
+# add user nn for Ranger KMS
+adduser nn
+kadmin.local -q 'addprinc -randkey nn'
+
 service krb5kdc start
 service kadmin start
