@@ -1,0 +1,30 @@
+{
+  "blueprint" : "3-node-cluster",
+  "default_password" : "admin",
+  "host_groups" :[
+    {
+      "name" : "host_group_1", 
+      "hosts" : [         
+        {
+          "fqdn" : "node1.example.com"
+        }
+      ]
+    },
+    {
+      "name" : "host_group_2", 
+      "hosts" : [         
+        {
+          "fqdn" : "node2.example.com"
+        }
+      ]
+    },
+    {
+      "name" : "host_group_3", 
+      "hosts" : [         
+        {
+          "fqdn" : "node3.example.com"
+        }
+      ]
+    }
+  ]
+}
