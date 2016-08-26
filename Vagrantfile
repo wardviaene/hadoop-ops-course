@@ -1,4 +1,5 @@
 Vagrant.configure(2) do |config|
+  config.ssh.insert_key = false 
   config.vm.define "node1" do |node1|
     node1.vm.box = "geerlingguy/centos7"
     node1.vm.network "private_network", ip: "192.168.199.2"
