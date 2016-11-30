@@ -9,6 +9,7 @@ Vagrant.configure(2) do |config|
     node1.vm.provider "virtualbox" do |v|
       v.memory = 4096
       v.cpus = 2
+      v.customize ['modifyvm', :id, '--cableconnected1', 'on']
     end
   end
   config.vm.define "node2" do |node2|
@@ -19,6 +20,7 @@ Vagrant.configure(2) do |config|
     node2.vm.provider "virtualbox" do |v|
       v.memory = 4096
       v.cpus = 2
+      v.customize ['modifyvm', :id, '--cableconnected1', 'on']
     end
   end
   config.vm.define "node3" do |node3|
@@ -29,6 +31,7 @@ Vagrant.configure(2) do |config|
     node3.vm.provider "virtualbox" do |v|
       v.memory = 2048
       v.cpus = 2
+      v.customize ['modifyvm', :id, '--cableconnected1', 'on']
     end
   end
 end
