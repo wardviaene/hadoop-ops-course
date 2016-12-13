@@ -38,3 +38,12 @@ service ntpd start
 
 # install deltarpm
 yum install -y deltarpm
+
+# fix DOWN interfaces - bug in centos7 box
+DOWNIF=`ip addr |grep DOWN |cut -d ' ' -f2 |cut -d ':' -f1`
+DOWNIFCHECK=`ip addr |grep DOWN |cut -d ' ' -f2 |cut -d ':' -f1 |wc -l`
+if [ $DOWNIFCHECK == 1 ] ; then
+  ifdown $DOWNIF
+  ifup $DOWNIF
+fi
+
