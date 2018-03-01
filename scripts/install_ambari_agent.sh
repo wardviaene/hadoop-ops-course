@@ -22,6 +22,9 @@ echo '192.168.199.4 node3.example.com' >> /etc/hosts
 cat /etc/ambari-agent/conf/ambari-agent.ini |sed 's/localhost/node1.example.com/g' > /etc/ambari-agent/conf/ambari-agent.ini.new
 mv -f /etc/ambari-agent/conf/ambari-agent.ini.new /etc/ambari-agent/conf/ambari-agent.ini
 
+# disable ssl checks
+sed -i 's/verify=platform_default/verify=disable/' /etc/python/cert-verification.cfg || echo "could not disable ssl checks"
+
 # start ambari-agent
 ambari-agent start
 
