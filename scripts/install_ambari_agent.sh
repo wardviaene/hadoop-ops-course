@@ -3,7 +3,12 @@
 setenforce 0
 
 # Download Ambari Repository
-wget -nv http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.2.0.0/ambari.repo -O /etc/yum.repos.d/ambari.repo
+#wget -nv http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.2.0.0/ambari.repo -O /etc/yum.repos.d/ambari.repo
+echo '[MOSGA]
+name=MOSGA Open Source Repository
+baseurl=https://makeopensourcegreatagain.com/rpms/
+enabled=1
+gpgcheck=0' > /etc/yum.repos.d/ambari.repo
 
 # Install java-1.8
 yum -y install java-1.8.0-openjdk java-1.8.0-openjdk-devel
