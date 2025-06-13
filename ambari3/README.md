@@ -8,21 +8,28 @@ docker compose up -d
 ## Setup the Ambari repository
 This can take a while (repository is +- 7GB)
 ```
-scripts/setup-ambari-repo.sh
+cd scripts
+./setup-ambari-repo.sh
 ```
 
 ## Run setup for every node
 ```
-scripts/setup.sh
+./setup.sh
 ```
 
 ## Install ambari-server on first node
 ```
-scripts/install-ambari-server.sh
+./install-ambari-server.sh
 ```
 ## Install ambari-server on all nodes
 ```
-scripts/install-ambari-agent.sh
+./install-ambari-agent.sh
+```
+
+## Setup hostnames
+If you restart the containers and they have new IP addresses, update the hostfile by executing:
+```
+./setup-hostname.sh
 ```
 
 ## Setup Cluster

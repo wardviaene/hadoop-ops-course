@@ -18,7 +18,8 @@ yum -y install https://dev.mysql.com/get/mysql80-community-release-el8-1.noarch.
 
 yum -y install mysql-server
 
-#mysqld --initialize
+rm -rf /var/lib/mysql/*
+mysqld --initialize
 chown -R mysql:mysql /var/lib/mysql
 
 MYSQL_ROOT_PASS=$(cat /var/log/mysql/mysqld.log |grep -i 'password is generated' |rev |cut -d ':' -f1 |rev |sed 's/\ //g')
@@ -77,10 +78,4 @@ ambari-server setup -s \
 
 
 ambari-server start
-
-
-# start agent
-sed -i "s/hostname=.*/hostname=bigtop_hostname0/" /etc/ambari-agent/conf/ambari-agent.ini
-ambari-agent start
-
 

@@ -24,10 +24,22 @@ yum install -y python3 python3-distro
 yum install -y java-17-openjdk-devel
 yum install -y java-1.8.0-openjdk-devel
 yum install -y ambari-agent
+yum install -y chrony
 
 # setup agent
-sed -i "s/hostname=.*/hostname=${AMBARI_AGENT_HOSTNAME}/" /etc/ambari-agent/conf/ambari-agent.ini
+sed -i "s/hostname=.*/hostname=bigtop-hostname0.demo.local/" /etc/ambari-agent/conf/ambari-agent.ini
 
 # we can start agent later
-ambari-agent start
+AGENT_RUNNING=$(ambari-agent status |grep -c running)
+if [ "$AGENT_RUNNING" != "1" ] ; then
+	ambari-agent start
+else
+	ambari-agent restart
+fi
 
+# cleanup packages that don't need to be installed
+yum remove -y rubygem-multi_json rubygem-semantic_puppet cpp-hocon rubygem-hocon rubygem-puppet-resource_api hiera leatherman ruby-facter rubygem-concurrent-ruby rubygem-deep_merge puppet rubygem-httpclient ruby-augeas facter yaml-cpp
+
+# setup chrony 
+systemctl enable chronyd
+systemctl start chronyd
