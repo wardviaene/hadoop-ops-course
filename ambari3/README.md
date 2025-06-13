@@ -1,15 +1,18 @@
 # Ambari3 installation instructions
 
+Clone this repository first and cd into the ambari3 directory.
+
 ## Start the containers
 ```
 docker compose up -d
 ```
 
+The next commands will run from the `scripts/` directory in `ambari3/`
+
 ## Setup the Ambari repository
 This can take a while (repository is +- 7GB)
 ```
-cd scripts
-./setup-ambari-repo.sh
+./setup-ambari-repo.sh  # cd scripts/ first
 ```
 
 ## Run setup for every node
