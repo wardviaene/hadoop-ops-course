@@ -35,7 +35,7 @@ done
 
 docker compose cp bigtop_hostname0:/root/.ssh/id_rsa.pub bigtop_hostname0.pub
 
-for i in $INSTANCES_WITHOUT_0 ; do
+for i in $INSTANCES ; do
 	docker compose cp bigtop_hostname0.pub $i:/root/.ssh/authorized_keys
 	docker compose exec -it $i chown root:root /root/.ssh/authorized_keys 
 	docker compose exec -it $i chmod 600 /root/.ssh/authorized_keys
