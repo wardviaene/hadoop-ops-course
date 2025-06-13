@@ -29,6 +29,8 @@ systemctl enable mysqld.service
 
 echo "
 ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'ambarirootpass';
+CREATE USER 'root'@'%.demo.local' IDENTIFIED WITH caching_sha2_password BY 'ambarirootpass';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%.demo.local';
 -- Create Ambari user and grant privileges
 CREATE USER 'ambari'@'localhost' IDENTIFIED BY 'ambari';
 GRANT ALL PRIVILEGES ON *.* TO 'ambari'@'localhost';
