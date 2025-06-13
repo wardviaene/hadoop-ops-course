@@ -1,0 +1,8 @@
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+# Container hostnames
+172.18.0.2  bigtop_hostname0
+172.18.0.3  bigtop_hostname1
+172.18.0.4  bigtop_hostname2
+172.18.0.5  bigtop_hostname3
