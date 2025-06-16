@@ -15,6 +15,13 @@ This can take a while (repository is +- 7GB)
 ./setup-ambari-repo.sh  # cd scripts/ first
 ```
 
+## Setup hostnames
+We need to set the hostnames in the hostname file correctly:
+```
+./setup-hostname.sh
+```
+Also when you restart the containers and they have new IP addresses, update the hostfile by executing this script.
+
 ## Run setup for every node
 ```
 ./setup.sh
@@ -27,12 +34,6 @@ This can take a while (repository is +- 7GB)
 ## Install ambari-server on all nodes
 ```
 ./install-ambari-agent.sh
-```
-
-## Setup hostnames
-If you restart the containers and they have new IP addresses, update the hostfile by executing:
-```
-./setup-hostname.sh
 ```
 
 ## Setup Cluster

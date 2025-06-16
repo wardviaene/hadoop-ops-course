@@ -13,6 +13,7 @@ echo '127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdom
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 ' > hosts
 for i in $INSTANCES ; do
+	docker compose exec -it $i yum install net-tools -y
 	docker compose cp getip.sh $i:/root/getip.sh
 	IP=$(docker compose exec -it $i /bin/bash /root/getip.sh)
 	HOSTNAME=$(docker compose exec -it $i hostname)
