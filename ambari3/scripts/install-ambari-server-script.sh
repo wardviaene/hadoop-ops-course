@@ -24,6 +24,8 @@ chown -R mysql:mysql /var/lib/mysql
 
 MYSQL_ROOT_PASS=$(cat /var/log/mysql/mysqld.log |grep -i 'password is generated' |rev |cut -d ':' -f1 |rev |sed 's/\ //g')
 
+echo 'bind-address=0.0.0.0' >> /etc/my.cnf.d/mysql-server.cnf
+
 systemctl start mysqld.service
 systemctl enable mysqld.service
 

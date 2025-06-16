@@ -29,7 +29,7 @@ for i in $INSTANCES ; do
 done
 
 for i in $INSTANCES ; do
-	docker compose exec -it $i setenforce 0
+	docker compose exec -it $i setenforce 0 || echo "selinux is disabled"
 	docker compose exec -it $i sed -i 's/enabled=0/enabled=1/g' /etc/yum.repos.d/Rocky-Devel.repo
 done
 
@@ -51,11 +51,16 @@ echo '127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdom
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 ' > hosts
 for i in $INSTANCES ; do
-	IP=$(docker compose exec -it $i hostname -i)
+	docker compose cp getip.sh $i:/root/getip.sh
+	IP=$(docker compose exec -it $i /bin/bash /root/getip.sh)
 	HOSTNAME=$(docker compose exec -it $i hostname)
 	HOSTNAME_SHORT=$(docker compose exec -it $i hostname -f)
 	echo "$IP $HOSTNAME_SHORT $HOSTNAME" >> hosts
 done
 
-cat hosts > ../conf/hosts
+if [ $(basename $PWD) == "scripts" ] ; then
+	cat hosts > ../conf/hosts
+else
+	cat hosts > conf/hosts
+fi
 rm hosts
